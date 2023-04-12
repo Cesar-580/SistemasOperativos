@@ -1,50 +1,23 @@
----
-Title : "Primer parcial sistemas operativos"
-Date : "11/04/2023"
-Author1 : "Cesar Augusto Ospina Muñoz"
-Email1 : "caospinamu@unal.edu.co"
-Author2 : "Brando Yesid Montoya Jaramillo"
-Email2 : "bmontoyaj@unal.edu.co"
----
+// Escriba un programa en lenguaje C (en un solo archivo de código) que determine la cantidad de
+// tiempo necesario para ejecutar un comando pasado como parámetro desde la línea de comandos.
+// Debe involucrar las funciones fork(), exec() y clock_gettime(), esta última para determinar
+// la cantidad de tiempo transcurrido.
 
-# Planteamiento
+// Ejemplos
+// # ./tiempo ls -l
+// -rwxr-xr-x. 1 root root 8.5K Apr 6 12:25 tiempo
+// -rw-r--r--. 1 root root 702 Apr 6 15:21 tiempo.c
+// El tiempo transcurrido para ejecutar el comando ls fue de 0.0002 segundos
 
-Escriba un programa en lenguaje C (en un solo archivo de código) que determine la cantidad de
-tiempo necesario para ejecutar un comando pasado como parámetro desde la línea de comandos.
-Debe involucrar las funciones `fork()`, `exec()` y `clock_gettime()`, esta última para determinar
-la cantidad de tiempo transcurrido.
+// Parcial 1
+// Fecha: 11-04-2023
+// Nombre: César Augusto Ospina Muñoz
+// Correo: caospinamu@unal.edu.co
+// Nombre: Brando Yesid Montoya Jaramillo
+// Correo: bmontoyaj@unal.edu.co
+// Curso: Sistemas Operativos
+// Github explicación : https://github.com/Cesar-580/ingenieriaSistemas-1/tree/master/SistemasOperativos/Parcial1
 
-Cree un proceso hijo que ejecute el comando pasado como parámetro desde la línea de comandos.
-Antes de que el proceso hijo ejecute el comando, debe guardar la marca de tiempo actual como
-tiempo inicial (obtenida con `clock_gettime()`). Una vez el proceso hijo termine, se debe
-registrar la marca de tiempo actual como marca de tiempo final. La diferencia entre el tiempo inicial
-y el tiempo final será el tiempo transcurrido para ejecutar el comando pasado como parámetro al
-proceso.
-
-Los procesos deben coordinar como van a compartir la marca de tiempo inicial, lo cual involucra
-mecanismos de IPC que debe implementar en el código **usando obligatoriamente el mecanismo de
-memoria compartida**. La salida debe entregar el nombre del comando ejecutado y el tiempo
-transcurrido en segundos y considerando todas las fracciones de segundo que se puedan obtener
-con la llamada a `clock_gettime()`, tal como se ilustra a continuación.
-
-Ejemplos
-```t
-# ./tiempo ls -l
--rwxr-xr-x. 1 root root 8.5K Apr 6 12:25 tiempo
--rw-r--r--. 1 root root 702 Apr 6 15:21 tiempo.c
-El tiempo transcurrido para ejecutar el comando ls fue de 0.0002 segundos
-```
-```t
-# ./tiempo top
-<Se ejecuta top hasta que el usuario pulsa la letra q para salir de top>
-El tiempo transcurrido para ejecutar el comando top fue de 10.023 segundos
-```
-
-# Solución
-
-Para solucionar dicho ejercicio se propone el siguiente algoritmo
-
-```c++
 // Importación de las librearías necesarias
 #include <stdio.h>
 #include <stdlib.h>
@@ -102,7 +75,7 @@ int main(int argc, char *argv[]) {
 
     // Mapeo de la memoria compartida
     // Lo que se pretende hacer es que en la memoria solo se esté guardando el registro de tiempo
-    // por lo que se mapea la memoria sobre dicho puntero
+    // por lo que se mapea la memoria sobre dicho puntero (Funcionalidad encontrada en foro)
     // *ptr = mmap(0,SMOBJ_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd,0);
     struct timespec *ptr = mmap(NULL, sizeof(struct timespec), PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, fd, 0);
     if (ptr == MAP_FAILED) {
@@ -170,27 +143,17 @@ int main(int argc, char *argv[]) {
     }
 
 }
-```
-# Pruebas de ejecuación
 
-## Prueba cuando no se coloca ningun comando
-![solucionP1](./imagenes/S3.png)
 
-## Prueba para el comando `ls -l`
-![solucionP2](./imagenes/S1.png)
 
-## Prueba para el comando `top`
 
-Este lo podemos comprobar manualmente el tiempo que dejamos el comando `top`
-![solucionP3](./imagenes/S2.png)
+// Documentación utilizada:
+// - https://man7.org/linux/man-pages/man3/shm_open.3.html
+// - https://man7.org/linux/man-pages/man3/ftruncate.3p.html
+// - https://man7.org/linux/man-pages/man2/clock_gettime.2.html
+// - https://man7.org/linux/man-pages/man3/memcpy.3.html
+// - https://man7.org/linux/man-pages/man3/munmap.3p.html
+// - https://stackoverflow.com/questions/73308620/share-portion-area-of-mmaped-memory
+// - https://www.youtube.com/watch?v=YC61729PThw&list=PLn9-gi1mj5U7K_Ke9N3uqOFdzNnHUpHhl&index=6
+// - https://www.youtube.com/watch?v=a8tR6d47bCc
 
-# Recusos utilizados
-
-- [**Comando shm_open**](https://man7.org/linux/man-pages/man3/shm_open.3.html)
-- [**Comando ftruncate**](https://man7.org/linux/man-pages/man3/ftruncate.3p.html)
-- [**Comando clock_gettime**](https://man7.org/linux/man-pages/man2/clock_gettime.2.html)
-- [**Comando mem (Copiar en memoria)**](https://man7.org/linux/man-pages/man3/memcpy.3.html)
-- [**Comando munmap**](https://man7.org/linux/man-pages/man3/munmap.3p.html)
-- [**Foro memoria compartida puntero de tiempo**](https://stackoverflow.com/questions/73308620/share-portion-area-of-mmaped-memory)
-- [**Video de semáforos**](https://www.youtube.com/watch?v=YC61729PThw&list=PLn9-gi1mj5U7K_Ke9N3uqOFdzNnHUpHhl&index=6)
-- [**Video de memoria compartida**](https://www.youtube.com/watch?v=a8tR6d47bCc)
