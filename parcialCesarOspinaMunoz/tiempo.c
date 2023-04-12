@@ -16,7 +16,7 @@
 // Nombre: Brando Yesid Montoya Jaramillo
 // Correo: bmontoyaj@unal.edu.co
 // Curso: Sistemas Operativos
-// Github explicación : https://github.com/Cesar-580/ingenieriaSistemas-1/tree/master/SistemasOperativos/Parcial1
+// Github explicación : https://github.com/Cesar-580/SistemasOperativos
 
 // Importación de las librearías necesarias
 #include <stdio.h>
