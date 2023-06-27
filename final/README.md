@@ -27,61 +27,42 @@ Para realazar el código esperado se necesitan explorar los conceptos de:
 
 ## Traducción
 
-Para la traducción se aplicará el método más sencillo que consta de, dada una dirección dividirla entre el tamaño la página y el desplazamiento co
+Para la traducción se aplicará el método más sencillo. Dada una dirección virtual (19986) dividirla entre el tamaño la página (4KB) y el desplazamiento se calculará con el residuo
+
+### Cálculo de la página
+
+Teniendo en cuenta que:
+
+- Dirección virtual = vd
+- tamaño de la página = 4KB => 4096
+
+$\rho = vd // 4096$
+
+### Cálculo del desplazamiento
+
+Teniendo en cuenta que:
+
+- Dirección virtual = vd
+- tamaño de la página = 4KB => 4096
+
+$ d = vd % 4096$
 
 
-```c
-// Import libraries
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <ctype.h>
+## TBL (Translation-lookaside buffer)
 
-// Gobal variables
-#define PAGE_SIZE 4096
-#define TLB_SIZE 16
-
-// function main
-int main(){
-    int virtual_address;
-    int page_number;
-    int offset;
-
-    // variables to measure time
-    clock_t start_time, end_time; 
-
-    char InPut;
-
-    do{
-        printf("Enter a virtual address: ");
-        scanf("%c", &InPut);
-
-        // convert the input to lower case
-        InPut = tolower(InPut);
-
-        if(InPut == 's'){
-            break;
-        }
-
-        // if not s, then continue with the program and convert the input to int
-
-        virtual_address = atoi(&InPut);
-
-        // start time
-        start_time = clock();
+Primero se creará una estructura para el Malloc en la cual se tendrá:
 
 
-        // Logic to translate the address
+## Diagrama de flujo
 
+![Diagrama de flujo](./img/Diagrama.png)
 
-        // end time
-        end_time = clock();
+|Posicion1|Posicion2|Posicion3|Posicion4| 
+|---|---|---|---|
+|DireccionVirtual|Pagina|Desplazamiento|NumeroDeUsos|
 
+# Recursos utilizados
 
+- https://www.programiz.com/c-programming/c-structures
+- https://man7.org/linux/man-pages/man3/malloc.3.html
 
-
-
-    }while (InPut != 's');
-
-}
-```
