@@ -178,7 +178,7 @@ En el código se aplica la politica de reemplazo del menos usado, para esto
 
 ![solucionP1](./img/S1.png)
 
-![solucionP2](./img/S1.png)
+![solucionP2](./img/S2.png)
 
 # Recursos utilizados
 - [**Manejo de estructuras**](https://www.programiz.com/c-programming/c-structures)
