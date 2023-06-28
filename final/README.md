@@ -173,6 +173,13 @@ struct TlbResult tlb_translateAddress(struct TBL_struct* tbl, int virtual_addres
 
 En el código se aplica la politica de reemplazo del menos usado, para esto 
 
+
+# Ejemplos de ejecucion
+
+![solucionP1](./img/S1.png)
+
+![solucionP2](./img/S1.png)
+
 # Recursos utilizados
 - [**Manejo de estructuras**](https://www.programiz.com/c-programming/c-structures)
 - [**Comando malloc**](https://man7.org/linux/man-pages/man3/malloc.3.html)
